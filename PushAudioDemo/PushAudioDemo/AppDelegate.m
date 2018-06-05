@@ -80,38 +80,10 @@
 
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    [[BPAudioManager sharedPlayer] playPushInfo:userInfo completed:nil] ;
+    // 未经过扩展推送处理并且app处于前台时播放语音。其他状态，就播放推送里的那个sound文件吧
+    if([userInfo objectForKey:@"hasHandled"] == nil && [UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        [[BPAudioManager sharedPlayer] playPushInfo:userInfo completed:nil] ;
+    }
 }
-
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-//    // 未经过扩展推送处理并且app处于前台时播放语音。其他状态，就播放推送里的那个sound文件吧
-//    if([userInfo objectForKey:@"hasHandled"] == nil && [UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-//        [[BPAudioManager sharedPlayer] playPushInfo:userInfo completed:nil] ;
-//    }
-//}
-
-/*
- 
-/我； d'/c；
- 
- 
- 
- 
-{
-    aps =     {
-        alert = "XXX到账一笔";
-        sound = "tts_default.mp3";
-        amount= "0.25"
-    };
-}
- 
- 
- 
- 
- 
- 
- */
-
-
 
 @end
